@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
     char *cwd;
     struct rlimit core_lim;
 
-    for ((c = getopt(argc, argv, "U:uispdvV:cC:")) != -1) {
+    while ((c = getopt(argc, argv, "U:uispdvV:cC:")) != -1) {
         switch (c) {
             case 'i':
                 pid = getpid();
