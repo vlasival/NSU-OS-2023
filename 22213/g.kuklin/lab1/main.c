@@ -15,7 +15,6 @@ int main(int argc, char *argv[]) {
     extern char **environ;
 
     pid_t pid, pgid, ppid;
-    ucred_t *cred;
     uid_t euid, ruid;
     gid_t egid, rgid;
     long ulim;
@@ -25,21 +24,14 @@ int main(int argc, char *argv[]) {
     while ((c = getopt(argc, argv, "U:uispdvV:cC:")) != -1) {
         switch (c) {
             case 'i':
-                pid = getpid();
-                cred = ucred_get(pid);
-                if (cred == NULL) {
-                    perror("Failed to obtain the user credential");
-                    continue;
-                }
-                euid = ucred_geteuid(cred);
-                ruid = ucred_getruid(cred);
-                egid = ucred_getegid(cred);
-                rgid = ucred_getrgid(cred);
+                euid = geteuid();
+                ruid = getuid();
+                egid = getegid();
+                rgid = getgid();
                 printf(
-                    "Effective user id = %d\nReal user id = %d\nEffective groud id = %d\nReal group id = %d\n",
+                    "Effective user id = %d\nReal user id = %d\nEffective group id = %d\nReal group id = %d\n",
                     euid, ruid, egid, rgid
                 );
-                ucred_free(cred);
                 break;
             case 's':
                 pid = getpid();
