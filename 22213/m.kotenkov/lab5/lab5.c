@@ -6,7 +6,6 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-//#define BUFSIZ 10
 
 typedef struct str_s {
     int offset;
