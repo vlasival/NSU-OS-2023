@@ -108,13 +108,12 @@ int main() {
     scanf("%s", choice_buffer);
     while ((status = sscanf(choice_buffer, "%d", &choice)) == 0)
     {
-        printf("Wrong inp");
+        printf("Wrong inp\nChoose the line: ");
         scanf("%s", choice_buffer);
     }
     
     while (choice != 0)
     {
-        printf("%d\n", status);
         if (choice > str_cnt)
         {
             printf("No such line. There are %d lines.\n", str_cnt);
@@ -128,7 +127,7 @@ int main() {
         scanf("%s", choice_buffer);
         while ((status = sscanf(choice_buffer, "%d", &choice)) == 0)
         {
-            printf("Wrong inp");
+            printf("Wrong inp\nChoose the line: ");
             scanf("%s", choice_buffer);
         }
     }
