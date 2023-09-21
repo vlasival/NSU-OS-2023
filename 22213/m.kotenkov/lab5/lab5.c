@@ -12,6 +12,36 @@ typedef struct str_s {
     int len;
 } str;
 
+
+void more_memory(int *allocated, int str_cnt, str *tmp, str *matrix) {
+    if ((*allocated) < str_cnt + 1)
+    {
+        (*allocated) *= 2;
+        if ((tmp = realloc(matrix, (*allocated) * sizeof(str))) != NULL)
+        {
+            matrix = tmp;
+        }
+        else
+        {
+            perror("Realloc error");
+        }
+    }
+}
+
+
+void str_print(str *matrix, int fd, int choice) {
+    char take_str[(int)matrix[choice - 1].len];
+    if (lseek(fd, matrix[choice - 1].offset, SEEK_SET) != matrix[choice - 1].offset) {
+        perror("Not correct number of bytes red.");
+    };
+    if (read(fd, take_str, matrix[choice - 1].len) == -1)
+    {
+        perror("Cannot read line.");
+    };
+    printf("%.*s\n", (int)matrix[choice - 1].len, take_str);
+}
+
+
 int main() {
 
     int fd = open("./big_text.txt", O_RDONLY);
@@ -24,7 +54,7 @@ int main() {
     int str_len = 0,
         pos = 0,
         str_cnt = 0,
-        choice,
+        choice = 0,
         allocated = 1,
         last = 0;
     
@@ -40,7 +70,6 @@ int main() {
     
     
     ssize_t bytes_red;
-
     bytes_red = read(fd, &buffer, BUFSIZ);
     
 
@@ -55,18 +84,7 @@ int main() {
         
         if (buffer[pos] == '\n')
         {
-            if (allocated < str_cnt + 1)
-            {
-                allocated *= 2;
-                if ((tmp = realloc(matrix, allocated * sizeof(str))) != NULL)
-                {
-                    matrix = tmp;
-                }
-                else
-                {
-                    perror("Realloc error");
-                }
-            }
+            more_memory(&allocated, str_cnt, tmp, matrix);
             matrix[str_cnt].offset = last + pos - str_len;
             matrix[str_cnt].len = str_len;
 
@@ -84,8 +102,10 @@ int main() {
         }
     }
     
+    char choice_buffer[100];
     printf("Choose the line: ");
-    scanf("%d", &choice);
+    scanf("%s", choice_buffer);
+    sscanf(choice_buffer, "%d", &choice);
     while (choice != 0)
     {
         if (choice > str_cnt)
@@ -94,15 +114,12 @@ int main() {
         }
         else
         {
-            char take_str[(int)matrix[choice - 1].len];
-            lseek(fd, matrix[choice - 1].offset, SEEK_SET);
-            read(fd, take_str, matrix[choice - 1].len);
-            //write(1, take_str, matrix[choice - 1][1]);
-            printf("%.*s\n", (int)matrix[choice - 1].len, take_str);
+            str_print(matrix, fd, choice);
         }
 
         printf("Choose the line: ");
-        scanf("%d", &choice);
+        scanf("%s", choice_buffer);
+        sscanf(choice_buffer, "%d", &choice);
     }
     
     free(matrix);
