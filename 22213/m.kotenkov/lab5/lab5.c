@@ -106,8 +106,13 @@ int main() {
     char choice_buffer[100];
     printf("Choose the line: ");
     scanf("%s", choice_buffer);
-    status = sscanf(choice_buffer, "%d", &choice);
-    while (choice != 0 && status != 0)
+    while ((status = sscanf(choice_buffer, "%d", &choice)) == 0)
+    {
+        printf("Wrong inp");
+        scanf("%s", choice_buffer);
+    }
+    
+    while (choice != 0)
     {
         printf("%d\n", status);
         if (choice > str_cnt)
@@ -121,7 +126,11 @@ int main() {
 
         printf("Choose the line: ");
         scanf("%s", choice_buffer);
-        status = sscanf(choice_buffer, "%d", &choice);
+        while ((status = sscanf(choice_buffer, "%d", &choice)) == 0)
+        {
+            printf("Wrong inp");
+            scanf("%s", choice_buffer);
+        }
     }
     
     free(matrix);
