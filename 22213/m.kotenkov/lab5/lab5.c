@@ -56,7 +56,8 @@ int main() {
         str_cnt = 0,
         choice = 0,
         allocated = 1,
-        last = 0;
+        last = 0, 
+        status = 0;
     
     char buffer[BUFSIZ];
 
@@ -105,9 +106,10 @@ int main() {
     char choice_buffer[100];
     printf("Choose the line: ");
     scanf("%s", choice_buffer);
-    sscanf(choice_buffer, "%d", &choice);
-    while (choice != 0)
+    status = sscanf(choice_buffer, "%d", &choice);
+    while (choice != 0 && status != 0)
     {
+        printf("%d\n", status);
         if (choice > str_cnt)
         {
             printf("No such line. There are %d lines.\n", str_cnt);
@@ -119,7 +121,7 @@ int main() {
 
         printf("Choose the line: ");
         scanf("%s", choice_buffer);
-        sscanf(choice_buffer, "%d", &choice);
+        status = sscanf(choice_buffer, "%d", &choice);
     }
     
     free(matrix);
