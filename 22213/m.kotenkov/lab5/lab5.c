@@ -109,7 +109,7 @@ int main() {
     {
         printf("Choose the line: ");
         scanf("%s", choice_buffer);
-        while ((choice = atol(choice_buffer)) == 0 && choice_buffer[0] != '0')
+        while (((choice = atol(choice_buffer)) == 0 && choice_buffer[0] != '0') || choice < 0)
         {
             printf("Wrong inp\nChoose the line: ");
             scanf("%s", choice_buffer);
