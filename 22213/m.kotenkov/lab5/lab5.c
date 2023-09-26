@@ -56,12 +56,11 @@ int main() {
         str_cnt = 0,
         choice = 0,
         allocated = 1,
-        last = 0, 
-        status = 0;
+        last = 0;
     
     char buffer[BUFSIZ];
 
-    str *tmp;
+    str *tmp = NULL;
     str *matrix;
     if ((matrix = (str*) malloc(sizeof(str))) == NULL)
     {
@@ -106,7 +105,7 @@ int main() {
     char choice_buffer[100];
     printf("Choose the line: ");
     scanf("%s", choice_buffer);
-    while ((status = sscanf(choice_buffer, "%d", &choice)) == 0)
+    while ((choice = atoi(choice_buffer)) == 0 && choice_buffer[0] != '0')
     {
         printf("Wrong inp\nChoose the line: ");
         scanf("%s", choice_buffer);
@@ -125,7 +124,7 @@ int main() {
 
         printf("Choose the line: ");
         scanf("%s", choice_buffer);
-        while ((status = sscanf(choice_buffer, "%d", &choice)) == 0)
+        while ((choice = atoi(choice_buffer)) == 0 && choice_buffer[0] != '0')
         {
             printf("Wrong inp\nChoose the line: ");
             scanf("%s", choice_buffer);
