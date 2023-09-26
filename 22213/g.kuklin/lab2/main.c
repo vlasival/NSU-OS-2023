@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <errno.h>
 
-#define BUFLEN 20
+#define BUFLEN 26
 
 int main() {
     if (putenv("TZ=America/Ensenada") != 0) {
