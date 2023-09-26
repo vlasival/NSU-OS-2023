@@ -54,9 +54,10 @@ int main() {
     int str_len = 0,
         pos = 0,
         str_cnt = 0,
-        choice = 0,
         allocated = 1,
         last = 0;
+    
+    long choice = 0;
     
     char buffer[BUFSIZ];
 
@@ -103,16 +104,22 @@ int main() {
     }
     
     char choice_buffer[100];
-    printf("Choose the line: ");
-    scanf("%s", choice_buffer);
-    while ((choice = atoi(choice_buffer)) == 0 && choice_buffer[0] != '0')
-    {
-        printf("Wrong inp\nChoose the line: ");
-        scanf("%s", choice_buffer);
-    }
     
-    while (choice != 0)
+    do
     {
+        printf("Choose the line: ");
+        scanf("%s", choice_buffer);
+        while ((choice = atol(choice_buffer)) == 0 && choice_buffer[0] != '0')
+        {
+            printf("Wrong inp\nChoose the line: ");
+            scanf("%s", choice_buffer);
+        }
+        
+        if (choice_buffer[0] == '0')
+        {
+            break;
+        }
+        
         if (choice > str_cnt)
         {
             printf("No such line. There are %d lines.\n", str_cnt);
@@ -121,15 +128,7 @@ int main() {
         {
             str_print(matrix, fd, choice);
         }
-
-        printf("Choose the line: ");
-        scanf("%s", choice_buffer);
-        while ((choice = atoi(choice_buffer)) == 0 && choice_buffer[0] != '0')
-        {
-            printf("Wrong inp\nChoose the line: ");
-            scanf("%s", choice_buffer);
-        }
-    }
+    } while (choice != 0);
     
     free(matrix);
     close(fd);
