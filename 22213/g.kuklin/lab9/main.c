@@ -17,7 +17,9 @@ int main() {
     } else {
         siginfo_t child_info;
         printf("%d\n", child);
-        waitid(P_PID, child, &child_info, WEXITED); 
+        if (waitid(P_PID, child, &child_info, WEXITED) == -1) {
+            perror("Failed to wait on child"); 
+        }
         printf("Cat ended.\n"); 
         printf(
             "signo=%d, errno=%d, code=%d\n",
