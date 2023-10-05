@@ -19,6 +19,7 @@ int main() {
         printf("%d\n", child);
         if (waitid(P_PID, child, &child_info, WEXITED) == -1) {
             perror("Failed to wait on child"); 
+            exit(1);
         }
         printf("Cat ended.\n"); 
         printf(
