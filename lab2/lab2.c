@@ -16,12 +16,13 @@ int main()
         perror("time error");
         exit(1);
     }
-
-    char* time = ctime(&date);
+    const int len = 26;
+    char time[len];
+    ctime_r(&date, time, len);
 
     if (time == NULL)
     {
-        perror("ctime error");
+        perror("ctime_r error");
         exit(1);
     }
     printf("%s", time);
