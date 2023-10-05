@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <wait.h>
 
-int main(int argc, char *argv[]) {
+int main() {
     pid_t child = fork();
     if (child == -1) {
         perror("Failed to fork");
@@ -20,11 +20,10 @@ int main(int argc, char *argv[]) {
         waitid(P_PID, child, &child_info, WEXITED); 
         printf("Cat ended.\n"); 
         printf(
-            "signo=%d, errno=%d, code=%d, value=%d\n",
+            "signo=%d, errno=%d, code=%d\n",
             child_info.si_signo,
             child_info.si_errno,
-            child_info.si_code,
-            child_info.si_value
+            child_info.si_code
         );
     };
 
