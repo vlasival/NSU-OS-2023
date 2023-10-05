@@ -5,12 +5,12 @@
 int main() {
     pid_t pid = fork();
     if (pid == -1) {
-         return 0;
+         exit(1);
     }
 
     if (pid == 0) {
         execlp("cat", "cat", "task2.c", NULL);
-        return 1;
+        exit(1);
     }
     else {
         if(wait(NULL) != -1) {
