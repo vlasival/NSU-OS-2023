@@ -5,23 +5,25 @@
 int main()
 {
     int code = putenv("TZ=America/Los_Angeles");
-    if (code < 0)
+    if (code != 0)
     {
         perror("putenv error");
-        exit(0);
+        exit(1);
     }
     time_t date = time(NULL);
     if (date == -1)
     {
         perror("time error");
-        exit(0);
+        exit(1);
     }
 
-    if (ctime(&date) == NULL)
+    char* time = ctime(&date);
+
+    if (time == NULL)
     {
         perror("ctime error");
-        exit(0);
+        exit(1);
     }
-    printf("%s", ctime(&date));
+    printf("%s", time);
     exit(0);
 }
