@@ -13,6 +13,7 @@ void outputID_workWithFile(char *name) {
     }
     if (fclose(file) == EOF) {
         perror("error closing file");
+	return;
     }
 }
 
@@ -22,6 +23,7 @@ int main(int argc, char *argv[]) {
     int setNewUID = seteuid(getuid());
     if (setNewUID == -1) {
         perror("failed to set new user ID\n");
+	return 1;
     }
 
     outputID_workWithFile(argv[1]);
