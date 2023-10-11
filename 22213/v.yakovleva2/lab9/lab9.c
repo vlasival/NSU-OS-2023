@@ -10,6 +10,7 @@ int main() {
 
     if (pid == 0) {
         execlp("cat", "cat", "task2.c", NULL);
+        return 0;
     }
     else {
         if(wait(NULL) != -1) {
