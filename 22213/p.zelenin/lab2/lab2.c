@@ -3,23 +3,27 @@
 #include <time.h>
 #include <errno.h>
 #include <stdio.h>
+#define MIN_BUFLEN 26
 
-int main()
-{
-    time_t t = time(0);
+int main() {
+
+    char buf[MIN_BUFLEN];
+    time_t t;
+    if ((t = time(0)) == -1) {
+        perror("error: could not get the time - ");
+        exit(EXIT_FAILURE);
+    }
+
     if (putenv("TZ=US/Pacific")) {
-        fprintf(stderr, "putenv() function caused an error: %s\n", strerror(errno));
+        perror("putenv() func caused an error - ");
         exit(EXIT_FAILURE);
     }    
-    if (localtime(&t) == NULL) {
-        fprintf(stderr, "localtime() function caused an error: %s\n", strerror(errno));
-        exit(EXIT_FAILURE);  
+    
+    if (ctime_r(&t, buf, MIN_BUFLEN) == NULL) {
+        perror("ctime_r func caused an error - ");
+        exit(EXIT_FAILURE);
     }
-    if (asctime(localtime(&t)) == NULL) {
-        fprintf(stderr, "asctime() function caused an error: %s\n", strerror(errno));
-        exit(EXIT_FAILURE); 
-    }
-                    
-    printf("%s/n", asctime(localtime(&t)));
-    exit(0);
+
+    printf("%s/n", ctime_r(&t, buf, MIN_BUFLEN));
+    exit(EXIT_SUCCESS);
 }
