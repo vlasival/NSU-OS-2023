@@ -15,7 +15,7 @@ int main(){
         perror("putenv");
         exit(1);
     }
-    if(ctime_r(&now, stime) == NULL){
+    if(ctime_r(&now, stime, 26) == NULL){
         perror("ctime_r");
         exit(1);
     }
