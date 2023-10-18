@@ -12,7 +12,8 @@ int main() {
             exit(1);
     }
     if (pid == 0) {
-        execl("/usr/bin/cat", "cat", "largefile", (char*) 0);
+        if (execlp("cat", "cat", "largefile", (char*) 0) == -1)
+            perror("failed to run cat");
 
         perror("exec one failed"); 
         exit(1);
