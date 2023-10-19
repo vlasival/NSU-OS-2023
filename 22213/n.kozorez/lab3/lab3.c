@@ -2,24 +2,25 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int main()
-{
-    printf("User real id is %d\n", getuid());
-    printf("User effective is %d\n", geteuid());
-
-    FILE *file = fopen("file", "r");
-    if (file == NULL)
-    {
+void open_file() {
+    FILE *file;
+    file = fopen("file", "r");
+    if (file == NULL) {
         perror("Couldn't open the file\n");
     }
-    else
-    {
+    else {
         printf("File opened successfully\n");
         fclose(file);
     }
+}
 
-    if (setuid(getuid()) == -1)
-    {
+int main() {
+    printf("User real id is %d\n", getuid());
+    printf("User effective is %d\n", geteuid());
+
+    open_file();
+
+    if (setuid(getuid()) == -1) {
         perror("Couldn't change setuid\n");
         exit(1);
     }
@@ -27,16 +28,7 @@ int main()
     printf("User real id is %d\n", getuid());
     printf("User effective is %d\n", geteuid());
 
-    file = fopen("file", "r");
-    if (file == NULL)
-    {
-        perror("Couldn't open the file\n");
-    }
-    else
-    {
-        printf("File opened successfully\n");
-        fclose(file);
-    }
+    open_file();
 
     exit(0);
 }
