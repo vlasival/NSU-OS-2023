@@ -18,12 +18,13 @@ int main() {
         perror("putenv() func caused an error - ");
         exit(EXIT_FAILURE);
     }    
-    
-    if (ctime_r(&t, buf, MIN_BUFLEN) == NULL) {
-        perror("ctime_r func caused an error - ");
+
+    char* result = ctime_r(&t, buf, MIN_BUFLEN);
+    if (result == NULL) {
+        perror("ctime_r() func caused an error - ");
         exit(EXIT_FAILURE);
     }
 
-    printf("%s/n", ctime_r(&t, buf, MIN_BUFLEN));
+    printf("%s\n", result);
     exit(EXIT_SUCCESS);
 }
