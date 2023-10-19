@@ -1,4 +1,4 @@
 all: lab19
 
-lab16:
+lab19:
 	gcc -m64 lab19.c -o lab19
