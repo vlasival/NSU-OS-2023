@@ -16,18 +16,18 @@ int main(int argc, char *argv[]) {
             perror("fork failed\n");
             exit(1);
         case 0:
-            execvp(argv[1], argv + 1);
-            perror("exec fail\n");
-            exit(1);
+            if (execvp(argv[1], argv + 1) == -1) {
+                perror("exec fail\n");
+                exit(1);
+            }
         default:{
             int status;
             if (waitpid(pid, &status, 0) == -1) {
                 perror("waitpid failed\n");
                 exit(1);
             } else {
-                printf("Status %d\n", status);
+                printf("Child has finished with status %d\n", status);
             }
-            printf("Child has finished\n");
            }
     }
 
