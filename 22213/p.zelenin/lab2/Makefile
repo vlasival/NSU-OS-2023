@@ -1,2 +1,2 @@
 lab2: lab2.c
-	cc lab2.c -o lab2
+	gcc lab2.c -o lab2 -Wall

@@ -25,6 +25,6 @@ int main() {
         exit(EXIT_FAILURE);
     }
 
-    printf("%s\n", result);
+    printf("%s", result);
     exit(EXIT_SUCCESS);
 }
