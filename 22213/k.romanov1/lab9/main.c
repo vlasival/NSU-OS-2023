@@ -19,8 +19,9 @@ int main() {
         perror("exec one failed"); 
         exit(1);
     }
-   
-    if (waitid(P_PID, pid, NULL, WEXITED) == -1) {
+  
+    siginfo_t child_info; 
+    if (waitid(P_PID, pid, &child_info, WEXITED) == -1) {
         perror("failed to wait child process");
         exit(1);
     }
