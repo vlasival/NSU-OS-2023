@@ -19,7 +19,7 @@ str *matrix;
 
 void str_print(str *matrix, int fd, int choice);
 void more_memory(int *allocated, int str_cnt, str *tmp, str *matrix);
-void sig_handler(int signum);
+void sig_handler();
 
 
 int main() {
@@ -103,7 +103,7 @@ int main() {
 }
 
 
-void sig_handler(int signum){
+void sig_handler(){
     if ((fd != -1) && (matrix != NULL))
     {
         int l = matrix[str_cnt-1].offset + matrix[str_cnt-1].len;
