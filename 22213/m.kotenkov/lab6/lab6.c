@@ -75,8 +75,8 @@ int main() {
     
     char choice_buffer[20];
 
-    alarm(5);
     do {
+        alarm(5);
         printf("Choose the line: ");
         scanf("%20s", choice_buffer);
         while (((choice = atol(choice_buffer)) == 0 && choice_buffer[0] != '0') || choice < 0) {
