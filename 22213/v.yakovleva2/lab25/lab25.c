@@ -34,6 +34,7 @@ int main() {
             write(fildes[1], ptr, 1);
         }
 
+
         close(fildes[1]);
         wait(NULL);
     }
