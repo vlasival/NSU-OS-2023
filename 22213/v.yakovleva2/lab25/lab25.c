@@ -29,7 +29,7 @@ int main() {
     else {
         close(fildes[0]);
 
-        char *text = "This is SomE Text\0";
+        char *text = "This iS SomE Text\0";
         for (char *ptr = text; *ptr != 0; ptr++) {
             write(fildes[1], ptr, 1);
         }
