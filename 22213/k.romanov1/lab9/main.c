@@ -6,7 +6,8 @@
 
 int main() {
     pid_t pid;
-    
+    int wstatus;
+
     if ((pid = fork()) == - 1) {
             perror("failed to fork");
             exit(1);
@@ -20,7 +21,7 @@ int main() {
     }
   
     siginfo_t child_info; 
-    if (waitid(P_PID, pid, &child_info, WEXITED) == -1) {
+    if (waitpid(pid, &wstatus, WNOHANG) == -1) {
         perror("failed to wait child process");
         exit(1);
     }
