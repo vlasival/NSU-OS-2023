@@ -21,7 +21,7 @@ int main() {
     }
   
     siginfo_t child_info; 
-    if (waitpid(pid, &wstatus, WNOHANG) == -1) {
+    if (waitpid(pid, &wstatus, WUNTRACED | WCONTINUED) == -1) {
         perror("failed to wait child process");
         exit(1);
     }
