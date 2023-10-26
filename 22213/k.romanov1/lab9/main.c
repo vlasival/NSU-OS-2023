@@ -5,7 +5,6 @@
 #include <stdio.h>
 
 int main() {
-    int waitstatus;
     pid_t pid;
     
     if ((pid = fork()) == - 1) {
