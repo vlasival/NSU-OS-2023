@@ -8,18 +8,21 @@ int main() {
     pid_t pid;
     int wstatus;
 
-    if ((pid = fork()) == - 1) {
+    switch(pid = fork()) {
+        case (-1):
             perror("failed to fork");
             exit(1);
-    }
-    if (pid == 0) {
-        if (execlp("cat", "cat", "largefile", (char*) 0) == -1)
-            perror("failed to run cat");
+            break;
+        case (0):
+            if (execlp("cat", "cat", "largefile", (char*) 0) == -1)
+                perror("failed to run cat");
 
-        perror("exec one failed"); 
-        exit(1);
+            perror("exec one failed"); 
+            exit(1);
+            break;
+        default:
+            break;
     }
-  
     siginfo_t child_info; 
     if (waitpid(pid, &wstatus, WUNTRACED | WCONTINUED) == -1) {
         perror("failed to wait child process");
