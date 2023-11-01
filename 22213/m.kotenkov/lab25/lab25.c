@@ -22,6 +22,7 @@ int main(int argc, char **argv) {
             perror("Fork failure");
             exit(EXIT_FAILURE);
         case 0:
+            close(fd[1]);
             if ((status = read(fd[0], msgin, MSGSIZE)) == -1) {
                 perror("Read failure");
                 exit(EXIT_FAILURE);
@@ -38,6 +39,7 @@ int main(int argc, char **argv) {
             };
             break;
         default:
+            close(fd[0]);
             if ((status = write(fd[1], msgout, MSGSIZE)) == -1) {
                 perror("Write failure");
                 exit(EXIT_FAILURE);
