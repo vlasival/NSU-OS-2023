@@ -31,7 +31,7 @@ int main() {
                 exit(EXIT_FAILURE);
             };
             while (status > 0) {
-                for (int i = 0; i < MSGSIZE; i++) {
+                for (int i = 0; i < status; i++) {
                     msgin[i] = toupper(msgin[i]);
                 }
                 if ((write(0, msgin, MSGSIZE)) == -1) {
