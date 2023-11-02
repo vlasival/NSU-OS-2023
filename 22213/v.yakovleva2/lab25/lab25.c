@@ -25,7 +25,7 @@ int main() {
 
             close(fildes[0]);
          
-        default:{
+        default:
             close(fildes[0]);
             
             char *text = "This is some text\0";
@@ -38,7 +38,7 @@ int main() {
             if (waitpid(pid, &status, 0)==-1){
                 return 1;
             } 
-        }
+        
     }
     return 0;
 
