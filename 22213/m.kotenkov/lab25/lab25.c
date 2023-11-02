@@ -3,13 +3,14 @@
 #include <sys/types.h>
 #include <ctype.h>
 #include <unistd.h>
+#include <string.h>
 
-#define   MSGSIZE   20
+#define   MSGSIZE   1
 
-int main(int argc, char **argv) {
+int main() {
     int fd[2], status;
     pid_t pid;
-    char msgout[MSGSIZE] = "Some Text\n";
+    char msgout[100] = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\nAPSLPASPF";
     char msgin[MSGSIZE];
 
     if (pipe(fd) == -1) {
@@ -23,24 +24,27 @@ int main(int argc, char **argv) {
             exit(EXIT_FAILURE);
         case 0:
             close(fd[1]);
+            
             if ((status = read(fd[0], msgin, MSGSIZE)) == -1) {
                 perror("Read failure");
                 exit(EXIT_FAILURE);
             };
-            close(fd[0]);
-
-            for (int i = 0; i < MSGSIZE; i++) {
-                msgin[i] = toupper(msgin[i]);
+            while (status > 0) {
+                for (int i = 0; i < MSGSIZE; i++) {
+                    msgin[i] = toupper(msgin[i]);
+                }
+                if ((write(0, msgin, MSGSIZE)) == -1) {
+                    perror("Write failure");
+                    exit(EXIT_FAILURE);
+                };
+                status = read(fd[0], msgin, MSGSIZE);
             }
             
-            if ((status = write(0, msgin, MSGSIZE)) == -1) {
-                perror("Write failure");
-                exit(EXIT_FAILURE);
-            };
+            close(fd[0]);
             break;
         default:
             close(fd[0]);
-            if ((status = write(fd[1], msgout, MSGSIZE)) == -1) {
+            if ((status = write(fd[1], msgout, strlen(msgout))) == -1) {
                 perror("Write failure");
                 exit(EXIT_FAILURE);
             };
