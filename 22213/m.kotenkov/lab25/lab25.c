@@ -8,7 +8,8 @@
 #define   MSGSIZE   20
 
 int main() {
-    int fd[2], status, written = 0;
+    int fd[2], status;
+    size_t written = 0;
     pid_t pid;
     char msgout[100] = "AAasfasfkjbslfjbealfjbaaaaaaaaaaaaaaaaaaaaa";
     char msgin[MSGSIZE];
