@@ -5,12 +5,12 @@
 #include <unistd.h>
 #include <string.h>
 
-#define   MSGSIZE   1
+#define   MSGSIZE   20
 
 int main() {
-    int fd[2], status;
+    int fd[2], status, written = 0;
     pid_t pid;
-    char msgout[100] = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\nAPSLPASPF";
+    char msgout[100] = "AAasfasfkjbslfjbealfjbaaaaaaaaaaaaaaaaaaaaa";
     char msgin[MSGSIZE];
 
     if (pipe(fd) == -1) {
@@ -44,9 +44,12 @@ int main() {
             break;
         default:
             close(fd[0]);
-            if ((status = write(fd[1], msgout, strlen(msgout))) == -1) {
-                perror("Write failure");
-                exit(EXIT_FAILURE);
+            while (written < strlen(msgout)) {
+                if ((status = write(fd[1], &msgout[written], MSGSIZE)) == -1) {
+                    perror("Write failure");
+                    exit(EXIT_FAILURE);
+                }
+                written += MSGSIZE;
             };
             close(fd[1]);
     }
