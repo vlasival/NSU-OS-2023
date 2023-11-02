@@ -5,13 +5,13 @@
 #include <unistd.h>
 #include <string.h>
 
-#define   MSGSIZE   20
+#define   MSGSIZE   23
 
 int main() {
     int fd[2], status;
     size_t written = 0;
     pid_t pid;
-    char msgout[100] = "AAasfasfkjbslfjbealfjbaaaaaaaaaaaaaaaaaaaaa";
+    char msgout[100] = "sSSSSSSSSSSsssssssssaaaaaaaaaaaaaaaaaaasfadf";
     char msgin[MSGSIZE];
 
     if (pipe(fd) == -1) {
@@ -25,28 +25,33 @@ int main() {
             exit(EXIT_FAILURE);
         case 0:
             close(fd[1]);
-            
-            if ((status = read(fd[0], msgin, MSGSIZE)) == -1) {
-                perror("Read failure");
-                exit(EXIT_FAILURE);
-            };
-            while (status > 0) {
-                for (int i = 0; i < status; i++) {
-                    msgin[i] = toupper(msgin[i]);
-                }
-                if ((write(0, msgin, MSGSIZE)) == -1) {
-                    perror("Write failure");
+
+            do {
+                if ((status = read(fd[0], msgin, MSGSIZE)) == -1) {
+                    perror("Read failure");
                     exit(EXIT_FAILURE);
                 };
-                status = read(fd[0], msgin, MSGSIZE);
-            }
+                
+                if (status != 0)
+                {
+                    for (int i = 0; i < status; i++) {
+                        msgin[i] = toupper(msgin[i]);
+                    }
+                    if ((write(0, msgin, status)) == -1) {
+                        perror("Write failure");
+                        exit(EXIT_FAILURE);
+                    };
+                }
+            } while (status > 0);
             
             close(fd[0]);
             break;
         default:
             close(fd[0]);
-            while (written < strlen(msgout)) {
-                if ((status = write(fd[1], &msgout[written], MSGSIZE)) == -1) {
+            
+            while (written < strlen(msgout) + 1) {
+                size_t to_send = strlen(&msgout[written]) + 1 < MSGSIZE ? strlen(&msgout[written]) + 1 : MSGSIZE;
+                if ((status = write(fd[1], &msgout[written], to_send)) == -1) {
                     perror("Write failure");
                     exit(EXIT_FAILURE);
                 }
