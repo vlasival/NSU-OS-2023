@@ -3,61 +3,79 @@
 #include <sys/types.h>
 #include <fcntl.h>
 #include <unistd.h>
-#define BUF_LEN 2
 
-int main(int argc, char* argv[]) {
-    int fd, count = 0, count_n = 1;
-    int capacity = BUF_LEN, capacity_n = BUF_LEN;
-    int line;
-    char c;
-    ssize_t check;
-    char* buf = (char*)malloc(sizeof(char) * BUF_LEN);
-    int* buf_n = (int*)malloc(sizeof(int) * BUF_LEN);
+#define BUF_LEN 20
+#define READBUF_LEN 20
 
-    if (buf == NULL || buf_n == NULL) {
-        perror("Memory allocation error - ");
+void makeLinesTable(int fd, off_t *count, int *count_n, off_t *buf_n) {
+    buf_n[0] = -1;
+    char *readBuffer = (char *) malloc(sizeof(char) * READBUF_LEN);
+    if (readBuffer == NULL) {
+        perror("Memory allocation error (readBuffer) ");
         exit(EXIT_FAILURE);
     }
-    buf_n[0] = 0;
+    int capacity_n = BUF_LEN;
+    ssize_t readBytes;
+    while ((readBytes = read(fd, readBuffer, READBUF_LEN)) > 0) {
+        for (ssize_t i = 0; i < readBytes; ++i) {
+            if (*(count_n) >= capacity_n) {
+                buf_n = (off_t *) realloc(buf_n, sizeof(off_t) * capacity_n * 2);
+                capacity_n *= 2;
+            }
+            if (readBuffer[i] == '\n') {
+                buf_n[++*(count_n)] = *(count) + (off_t) i;
+            }
+        }
+        *(count) += (off_t) readBytes;
+    }
+    if (readBytes < 0) {
+        perror("read() caused an error ");
+        exit(EXIT_FAILURE);
+    }
+
+    buf_n[++*(count_n)] = *(count);
+    free(readBuffer);
+}
+
+
+int main(int argc, char* argv[]) {
+    int fd, count_n = 0;
+    off_t count = 0;
+    int capacity = BUF_LEN;
+    int line;
+    char* buf = (char*)malloc(sizeof(char) * BUF_LEN);
+    off_t* buf_n = (off_t*)calloc(BUF_LEN, sizeof(off_t));
+
+    if (buf == NULL) {
+        perror("Memory allocation error (buf) ");
+        exit(EXIT_FAILURE);
+    }
+
+    if (buf_n == NULL) {
+        perror("Memory allocation error (buf_n) ");
+        exit(EXIT_FAILURE);
+    }
 
     if (((fd = open(argv[1], O_RDONLY)) == -1)) {
         perror("Could not open the file - ");
         exit(EXIT_FAILURE);
     }
 
-    while((check = read(fd, &c, 1)) > 0) {
-        count++;
-        if (count_n == capacity_n) {
-            buf_n = (int*)realloc(buf_n, sizeof (int) * capacity_n * 2);
-            if (buf_n == NULL) {
-                perror("realloc() caused an error - ");
-                exit(EXIT_FAILURE);
-            }
-            capacity_n *= 2;
-        }
-        if (c == '\n') {
-            buf_n[count_n++] = lseek(fd, 0L, SEEK_CUR);
-        }
-    }
-    if (check < 0) {
-        perror("read() caused an error - ");
-        exit(EXIT_FAILURE);
-    }
-    buf_n[count_n++] = lseek(fd, 0L, SEEK_CUR);
+    makeLinesTable(fd, &count, &count_n, buf_n);
 
     if (capacity < count) {
-        buf = (char*) realloc(buf, sizeof (char) * (count + 1));
+        buf = (char* ) realloc(buf, sizeof(char) * (count + 1));
         if (buf == NULL) {
-            perror("realloc() caused an error - ");
+            perror("realloc() caused an error (buf) ");
             exit(EXIT_FAILURE);
         }
     }
 
     while (1) {
-        lseek(fd, 0L, SEEK_SET);
         printf("Enter the line number - ");
+
         if (scanf("%d", &line) != 1) {
-            perror("Could not read the line number - ");
+            perror("Could not read the line number ");
             exit(EXIT_FAILURE);
         }
         if (line >= count_n || line < 0) {
@@ -67,17 +85,22 @@ int main(int argc, char* argv[]) {
         if (line == 0) {
             break;
         }
-        int len = buf_n[line] - buf_n[line - 1];
-        lseek(fd, (long)buf_n[line - 1], 1);
-        read(fd, buf, len);
-        write(1, buf, len);
+
+        size_t len = buf_n[line] - buf_n[line - 1] - 1;
+        if (lseek(fd, buf_n[line - 1] + 1, SEEK_SET) == -1) {
+            perror("lseek() caused an error trying to get the line-");
+            exit(EXIT_FAILURE);
+        }
+        if (read(fd, buf, len) != len) {
+            perror("read() caused an error (line reading)");
+            exit(EXIT_FAILURE);
+        }
+        buf[len] = '\0';
+        printf("%s\n", buf);
     }
 
     free(buf_n);
     free(buf);
-    buf = NULL;
-    buf_n = NULL;
     close(fd);
     exit(EXIT_SUCCESS);
-
 }
