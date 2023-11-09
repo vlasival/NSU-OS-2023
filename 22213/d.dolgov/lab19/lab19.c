@@ -10,6 +10,9 @@
 struct dirent *file;
 regex_t regex;
 
+int letterCounter = 0;
+int flag = 0;
+
 enum argCheckerStatuses {
     SUCCESS, TOO_MANY_ARGUMENTS, NO_ARGUMENTS
 };
@@ -40,13 +43,17 @@ int checkString(char *searchString) {
 
 void parseLetter(const char *pattern, char *newPattern, int i, int *counter) {
     if (pattern[i] == '?') {
-        newPattern[*counter] = '.';
+        newPattern[*counter] = '\\';
         (*counter)++;
+        newPattern[*counter] = 'w';
+        (*counter)++;
+        letterCounter++;
     } else if (pattern[i] == '*') {
         newPattern[*counter] = '.';
         (*counter)++;
         newPattern[*counter] = '*';
         (*counter)++;
+        flag++;
     } else if (pattern[i] == '.') {
         newPattern[*counter] = '\\';
         (*counter)++;
@@ -60,7 +67,13 @@ void parseLetter(const char *pattern, char *newPattern, int i, int *counter) {
 
 void buildRegexp(char *pattern, int patternLength) {
     char *newPattern = malloc(sizeof(char) * MAX_PATTERN_LENGTH);
+
+    if (newPattern == NULL) {
+        perror("COULD NOT ALLOCATE MEMORY FOR REGEXP\n");
+    }
+
     int counter = 0;
+
     for (int i = 0; i < patternLength; i++) {
         parseLetter(pattern, newPattern, i, &counter);
     }
@@ -68,7 +81,7 @@ void buildRegexp(char *pattern, int patternLength) {
     int reti = regcomp(&regex, newPattern, 0);
 
     if (reti) {
-        fprintf(stderr, "COULD NOT COMPILE REGEX\n");
+        perror("COULD NOT COMPILE REGEX\n");
         exit(1);
     }
 
@@ -81,10 +94,17 @@ void readFiles(DIR *folder, int *notFoundFlag) {
         errno = 0;
 
         char *fileName = malloc(sizeof(char) * (strlen(file->d_name) + 1));
+
+        if (fileName == NULL) {
+            perror("COULD NOT ALLOCATE MEMORY FOR FILENAME\n");
+        }
+
         strcpy(fileName, file->d_name);
 
         if (!regexec(&regex, fileName, 0, NULL, 0)) {
             printf("%s ", file->d_name);
+            (*notFoundFlag)++;
+        } else if (flag == 0 && strlen(fileName) > letterCounter) {
             (*notFoundFlag)++;
         }
 
@@ -92,7 +112,7 @@ void readFiles(DIR *folder, int *notFoundFlag) {
     }
 
     if (errno != 0) {
-        fprintf(stderr, "ERROR READING DIRECTORY\n");
+        perror("ERROR READING DIRECTORY\n");
     }
 
     closedir(folder);
@@ -103,7 +123,7 @@ void findFiles(char *pattern, int patternLength) {
     int notFoundFlag = 0;
 
     if (folder == NULL) {
-        fprintf(stderr, "UNABLE TO READ THE DIRECTORY\n");
+        perror("UNABLE TO READ THE DIRECTORY\n");
         exit(1);
     }
 
@@ -117,13 +137,18 @@ void findFiles(char *pattern, int patternLength) {
     printf("\n");
 }
 
-void propagate(char *argv[]) {
-    int patternLength = (int) strlen(argv[1]);
+void propagate(char *rawPattern) {
+    int patternLength = (int) strlen(rawPattern);
     char *pattern = malloc(sizeof(char) * patternLength);
-    strcpy(pattern, argv[1]);
+
+    if (pattern == NULL) {
+        perror("COULD NOT ALLOCATE MEMORY FOR PATTERN\n");
+    }
+
+    strcpy(pattern, rawPattern);
 
     if (checkString(pattern) == SLASH_FOUND) {
-        fprintf(stderr, "NO SLASHES ALLOWED IN THE SEARCH PATTERN %s\n", pattern);
+        perror("NO SLASHES ALLOWED IN THE SEARCH PATTERN\n");
     } else {
         findFiles(pattern, patternLength);
     }
@@ -131,16 +156,25 @@ void propagate(char *argv[]) {
     free(pattern);
 }
 
-int main(int argc, char *argv[], char *envp[]) {
-    int checkResult = argCheck(argc);
-    if (checkResult == SUCCESS) {
-        propagate(argv);
-    } else if (checkResult == NO_ARGUMENTS) {
-        fprintf(stderr, "NO ARGUMENTS\n");
-    } else {
-        fprintf(stderr, "TOO MANY ARGUMENTS\n");
+char *patternInput() {
+    printf("Please enter your file pattern\n");
+    char *pattern = malloc(sizeof(char) * MAX_PATTERN_LENGTH);
+
+    if (pattern == NULL) {
+        perror("COULD NOT ALLOCATE MEMORY FOR PATTERN\n");
     }
 
+    scanf("%s", pattern);
+
+    return pattern;
+}
+
+int main(int argc, char *argv[]) {
+    char *pattern = patternInput();
+
+    propagate(pattern);
+
+    free(pattern);
     exit(0);
 }
 
