@@ -49,8 +49,8 @@ int main() {
         default:
             close(fd[0]);
             
-            while (written < strlen(msgout) + 1) {
-                size_t to_send = strlen(&msgout[written]) + 1 < MSGSIZE ? strlen(&msgout[written]) + 1 : MSGSIZE;
+            while (written < strlen(msgout)) {
+                size_t to_send = strlen(&msgout[written]) < MSGSIZE ? strlen(&msgout[written]) : MSGSIZE;
                 if ((status = write(fd[1], &msgout[written], to_send)) == -1) {
                     perror("Write failure");
                     exit(EXIT_FAILURE);
