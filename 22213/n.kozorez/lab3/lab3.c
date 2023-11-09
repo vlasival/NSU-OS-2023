@@ -2,10 +2,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void open_file() {
-    FILE *file;
-    file = fopen("file", "r");
-    if (file == NULL) {
+void open_file(const char *filepath) {
+    int file = open(filepath, O_RDONLY);
+    if (file < 0) {
         perror("Couldn't open the file\n");
     }
     else {
@@ -15,6 +14,7 @@ void open_file() {
 }
 
 int main() {
+    const char *filename = "file";
     printf("User real id is %d\n", getuid());
     printf("User effective is %d\n", geteuid());
 
