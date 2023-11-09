@@ -9,8 +9,9 @@
 #define SERVER_SOCK_FILE "server.sock"
 
 int main() {
-    char buf[100];
-    int fd, rc;
+    char buf[100]; //store data read from standard input and write to the socket
+    int fd, rc; //fd for the socket descriptor and rc for
+    //the return code of various system calls.
 
     if ((fd = socket(AF_UNIX, SOCK_STREAM, 0)) == -1){
         perror("socket creating error");
@@ -28,7 +29,7 @@ int main() {
     }
 
     while ((rc = read(STDIN_FILENO, buf, sizeof(buf))) > 0) {
-        if ((write(fd, buf, rc) != rc)) {
+        if ((write(fd, buf, rc) != rc)) { //It checks if the number of bytes written does not match the expected number of bytes
             if (rc > 0) {
                 perror("partial write");
             } else {
@@ -38,6 +39,7 @@ int main() {
         }
     }
 
+    close(fd);
     return 0;
 
 }
