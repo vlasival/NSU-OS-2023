@@ -10,10 +10,10 @@ void open_file(const char *filepath) {
     int file = open(filepath, O_RDONLY);
     if (file < 0) {
         perror("Couldn't open the file\n");
+        return;
     }
-    else {
-        printf("File opened successfully\n");
-        fclose(file);
+    if (close(file)) {
+        perror("Failed to close file");    
     }
 }
 
