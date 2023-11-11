@@ -4,6 +4,7 @@
 #include <curses.h>
 #include <unistd.h>
 
+
 int cnt = 0;
 
 
@@ -11,7 +12,10 @@ void beep_handler();
 void quit();
 
 int main() {
-    signal(SIGINT, beep_handler);
+    struct sigaction beep_sigaction;
+    beep_sigaction.sa_handler = beep_handler;
+
+    sigaction(SIGINT, &beep_sigaction, NULL);
     signal(SIGQUIT, quit);
 
     while (1);
@@ -20,7 +24,6 @@ int main() {
 void beep_handler() {
     write(1, "\a", 1);
     cnt++;
-    signal(SIGINT, beep_handler);
 }
 
 void quit() {
