@@ -4,16 +4,17 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <strings.h>
+#include <errno.h>
+#include <sys/time.h>
 
 #define CLIENT_SOCK_FILE "client.sock"
 #define SERVER_SOCK_FILE "server.sock"
 
 int main() {
-    char buf[100]; //store data read from standard input and write to the socket
-    int fd, rc; //fd for the socket descriptor and rc for
-    //the return code of various system calls.
+    char buf[100];
+    int fd, rc;
 
-    if ((fd = socket(AF_UNIX, SOCK_STREAM, 0)) == -1){
+    if ((fd = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
         perror("socket creating error");
         exit(1);
     }
@@ -23,13 +24,47 @@ int main() {
     addr.sun_family = AF_UNIX;
     strcpy(addr.sun_path, SERVER_SOCK_FILE);
 
-    if (connect(fd, (struct sockaddr *)&addr, sizeof(addr)) == -1) {
-        perror("connection failure");
-        exit(1);
+    // Implementing a timeout for the connection attempt
+    struct timeval tv;
+    tv.tv_sec = 10; // Timeout set to 10 seconds
+
+    if (connect(fd, (struct sockaddr *)&addr, sizeof(addr)) == -1) { //attempts to establish a connection with the server
+        //EINPROGRESS indicates that the connection request has been initiated but hasn’t completed yet.
+        if (errno == EINPROGRESS) {
+            fd_set write_fds;
+            FD_ZERO(&write_fds);
+            FD_SET(fd, &write_fds);
+
+            //to monitor the socket file descriptor fd for write readiness within a specified time
+            //select requires the highest-numbered file descriptor in the set plus 1
+            int result = select(fd + 1, NULL, &write_fds, NULL, &tv);
+            if (result == -1) {
+                perror("select error");
+                exit(1);
+            } else if (result == 0) {
+                fprintf(stderr, "Connection attempt timed out\n");
+                exit(1);
+            } else {
+                int val;
+                socklen_t len = sizeof(int);
+                //to get any error that might have occurred during the connection process
+                if (getsockopt(fd, SOL_SOCKET, SO_ERROR, &val, &len) == -1) {
+                    perror("getsockopt error");
+                    exit(1);
+                }
+                if (val != 0) {
+                    fprintf(stderr, "Connection error\n");
+                    exit(1);
+                }
+            }
+        } else {
+            fprintf(stderr, "Connection failed\n");
+            exit(1);
+        }
     }
 
     while ((rc = read(STDIN_FILENO, buf, sizeof(buf))) > 0) {
-        if ((write(fd, buf, rc) != rc)) { //It checks if the number of bytes written does not match the expected number of bytes
+        if ((write(fd, buf, rc) != rc)) {
             if (rc > 0) {
                 perror("partial write");
             } else {
@@ -41,5 +76,4 @@ int main() {
 
     close(fd);
     return 0;
-
 }

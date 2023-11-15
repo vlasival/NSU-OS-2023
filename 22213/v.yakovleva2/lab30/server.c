@@ -10,6 +10,9 @@
 #define SERVER_SOCK_FILE "server.sock"
 
 int main() {
+    
+        unlink(SERVER_SOCK_FILE); //if socket is  already in use
+    
         char buf[100]; //to store data read from the socket
         int fd, cl, rc; //fd for the server socket descriptor,
         //cl for the client socket descriptor,
