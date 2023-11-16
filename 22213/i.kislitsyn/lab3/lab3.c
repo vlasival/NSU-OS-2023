@@ -5,17 +5,19 @@
 
 int main() {
     FILE *file;
-    uid_t euid = geteuid();
-    printf("Real user id: %u\n", getuid());
-    printf("Effective user id: %u\n\n", euid);
+    uid_t uid = getuid();
+    printf("Real user id: %u\n", uid);
+    printf("Effective user id: %u\n", geteuid());
 
     if ((file = fopen("example.txt", "w")) == NULL) {
         perror("fopen");
-        exit(1);
+        //exit(1);
+    } else {
+        printf("File opened succesfully\n\n");
+        fclose(file);
     }
-    fclose(file);
 
-    if (setuid(euid) < 0) {
+    if (setuid(uid) < 0) {
         perror("setuid");
         exit(1);
     }
@@ -26,9 +28,10 @@ int main() {
     if ((file = fopen("example.txt", "w")) == NULL)
     {
         perror("fopen");
-        exit(1);
+        //exit(1);
+    } else {
+        printf("File opened succesfully\n");
+        fclose(file);
     }
-    fclose(file);
-
     exit(0);
 }
