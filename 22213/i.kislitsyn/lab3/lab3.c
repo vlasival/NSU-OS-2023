@@ -11,7 +11,6 @@ int main() {
 
     if ((file = fopen("example.txt", "w")) == NULL) {
         perror("fopen");
-        //exit(1);
     } else {
         printf("File opened succesfully\n\n");
         fclose(file);
@@ -28,7 +27,6 @@ int main() {
     if ((file = fopen("example.txt", "w")) == NULL)
     {
         perror("fopen");
-        //exit(1);
     } else {
         printf("File opened succesfully\n");
         fclose(file);
