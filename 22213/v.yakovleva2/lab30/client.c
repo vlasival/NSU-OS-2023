@@ -38,7 +38,7 @@ int main() {
             //to monitor the socket file descriptor fd for write readiness within a specified time
             //select requires the highest-numbered file descriptor in the set plus 1
             int result = select(fd + 1, NULL, &write_fds, NULL, &tv);
-
+            int val;
             switch (result) {
                 case -1:
                     perror("select error");
@@ -49,7 +49,7 @@ int main() {
                     exit(1);
                     break;
                 default:
-                    int val;
+
                     socklen_t len = sizeof(int);
                     //to get any error that might have occurred during the connection process
                     if (getsockopt(fd, SOL_SOCKET, SO_ERROR, &val, &len) == -1) {
