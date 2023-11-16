@@ -10,19 +10,25 @@ int main() {
     printf("Effective user id: %u\n\n", euid);
 
     if ((file = fopen("example.txt", "w")) == NULL) {
-        perror("fopen: ");
+        perror("fopen");
         exit(1);
     }
-
+    fclose(file);
 
     if (setuid(euid) < 0) {
-        perror("setuid: ");
+        perror("setuid");
         exit(1);
     }
 
     printf("Real user id: %u\n", getuid());
     printf("Effective user id: %u\n", geteuid());
 
+    if ((file = fopen("example.txt", "w")) == NULL)
+    {
+        perror("fopen");
+        exit(1);
+    }
     fclose(file);
+
     exit(0);
 }
