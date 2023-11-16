@@ -63,7 +63,9 @@ int main() {
                 if (rc == -1) {
                         perror("read");
                         exit(1);
-                } else if (rc == 0) {
+                }
+
+                if (rc == 0) {
                         printf("closing connection\n");
                         close(cl);
                         close(fd);

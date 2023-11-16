@@ -38,25 +38,31 @@ int main() {
             //to monitor the socket file descriptor fd for write readiness within a specified time
             //select requires the highest-numbered file descriptor in the set plus 1
             int result = select(fd + 1, NULL, &write_fds, NULL, &tv);
-            if (result == -1) {
-                perror("select error");
-                exit(1);
-            } else if (result == 0) {
-                fprintf(stderr, "Connection attempt timed out\n");
-                exit(1);
-            } else {
-                int val;
-                socklen_t len = sizeof(int);
-                //to get any error that might have occurred during the connection process
-                if (getsockopt(fd, SOL_SOCKET, SO_ERROR, &val, &len) == -1) {
-                    perror("getsockopt error");
+
+            switch (result) {
+                case -1:
+                    perror("select error");
                     exit(1);
-                }
-                if (val != 0) {
-                    fprintf(stderr, "Connection error\n");
+                    break;
+                case 0:
+                    fprintf(stderr, "Connection attempt timed out\n");
                     exit(1);
-                }
+                    break;
+                default:
+                    int val;
+                    socklen_t len = sizeof(int);
+                    //to get any error that might have occurred during the connection process
+                    if (getsockopt(fd, SOL_SOCKET, SO_ERROR, &val, &len) == -1) {
+                        perror("getsockopt error");
+                        exit(1);
+                    }
+                    if (val != 0) {
+                        fprintf(stderr, "Connection error\n");
+                        exit(1);
+                    }
+                    break;
             }
+
         } else {
             fprintf(stderr, "Connection failed\n");
             exit(1);
