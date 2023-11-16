@@ -48,7 +48,7 @@ int main() {
                     fprintf(stderr, "Connection attempt timed out\n");
                     exit(1);
                     break;
-                default:
+                default:{
 
                     socklen_t len = sizeof(int);
                     //to get any error that might have occurred during the connection process
@@ -61,6 +61,7 @@ int main() {
                         exit(1);
                     }
                     break;
+                }
             }
 
         } else {
