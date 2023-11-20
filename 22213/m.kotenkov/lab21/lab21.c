@@ -5,20 +5,27 @@
 #include <unistd.h>
 
 
-int cnt = 0;
+int cnt = 0, quit_flag = 0;
 
 
 void beep_handler();
 void quit();
 
 int main() {
-    struct sigaction beep_sigaction;
+    struct sigaction beep_sigaction, quit_sigaction;
     beep_sigaction.sa_handler = beep_handler;
+    quit_sigaction.sa_handler = quit;
 
     sigaction(SIGINT, &beep_sigaction, NULL);
-    signal(SIGQUIT, quit);
+    sigaction(SIGQUIT, &quit_sigaction, NULL);
 
-    while (1);
+    while (1) {
+        if (quit_flag)
+        {
+            printf("\nThe sound was produced %d times\n", cnt);
+            exit(EXIT_SUCCESS);
+        }
+    };
 }
 
 void beep_handler() {
@@ -27,27 +34,5 @@ void beep_handler() {
 }
 
 void quit() {
-    char buf[11];
-    buf[0] = '0';
-    int step = 1000000000, i = 9, to_write = 1;
-    if (cnt > 0)
-    {
-        while (cnt / step == 0 && step > 0) {
-            step /= 10;
-            i--;
-        }
-        to_write = 0;
-        while (i >= 0) {
-            buf[i] = (cnt - (cnt / 10) * 10) + '0';
-            cnt /= 10;
-            i--;
-            to_write++;
-        }
-    }
-    
-    write(1, "The sound was produced ", 23);
-    write(1, buf, to_write);
-    write(1, " times\n", 7);
-
-    exit(EXIT_SUCCESS);
+    quit_flag = 1;
 }
