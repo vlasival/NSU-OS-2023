@@ -12,6 +12,7 @@ regex_t regex;
 
 int letterCounter = 0;
 int flag = 0;
+char *pattern;
 
 enum argCheckerStatuses {
     SUCCESS, TOO_MANY_ARGUMENTS, NO_ARGUMENTS
@@ -43,9 +44,29 @@ int checkString(char *searchString) {
 
 void parseLetter(const char *pattern, char *newPattern, int i, int *counter) {
     if (pattern[i] == '?') {
-        newPattern[*counter] = '\\';
+        newPattern[*counter] = '[';
         (*counter)++;
-        newPattern[*counter] = 'w';
+        newPattern[*counter] = 'A';
+        (*counter)++;
+        newPattern[*counter] = '-';
+        (*counter)++;
+        newPattern[*counter] = 'Z';
+        (*counter)++;
+        newPattern[*counter] = 'a';
+        (*counter)++;
+        newPattern[*counter] = '-';
+        (*counter)++;
+        newPattern[*counter] = 'z';
+        (*counter)++;
+        newPattern[*counter] = '0';
+        (*counter)++;
+        newPattern[*counter] = '-';
+        (*counter)++;
+        newPattern[*counter] = '9';
+        (*counter)++;
+        newPattern[*counter] = '_';
+        (*counter)++;
+        newPattern[*counter] = ']';
         (*counter)++;
         letterCounter++;
     } else if (pattern[i] == '*') {
@@ -62,10 +83,11 @@ void parseLetter(const char *pattern, char *newPattern, int i, int *counter) {
     } else {
         newPattern[*counter] = pattern[i];
         (*counter)++;
+        letterCounter++;
     }
 }
 
-void buildRegexp(char *pattern, int patternLength) {
+void buildRegexp(char *pattern_, int patternLength) {
     char *newPattern = malloc(sizeof(char) * MAX_PATTERN_LENGTH);
 
     if (newPattern == NULL) {
@@ -75,7 +97,7 @@ void buildRegexp(char *pattern, int patternLength) {
     int counter = 0;
 
     for (int i = 0; i < patternLength; i++) {
-        parseLetter(pattern, newPattern, i, &counter);
+        parseLetter(pattern_, newPattern, i, &counter);
     }
 
     int reti = regcomp(&regex, newPattern, 0);
@@ -100,10 +122,35 @@ void readFiles(DIR *folder, int *notFoundFlag) {
         }
 
         strcpy(fileName, file->d_name);
-
         if (!regexec(&regex, fileName, 0, NULL, 0)) {
-            printf("%s ", file->d_name);
-            (*notFoundFlag)++;
+            if (flag == 0 && letterCounter == strlen(file->d_name)) {
+                printf("%s ", file->d_name);
+                (*notFoundFlag)++;
+                continue;
+            } else if (flag > 0){
+                int g = 0;
+                int patternCounter = (int) strlen(pattern);
+                for (int i = file->d_namlen; i >= 0; i --) {
+                    if (pattern[patternCounter] == '?' || pattern[patternCounter] == '*') {
+                        (*notFoundFlag)++;
+                        break;
+                    }
+
+                    if (pattern[patternCounter] == file->d_name[i]) {
+                        patternCounter--;
+                        continue;
+                    } else {
+                        g = 1;
+                        break;
+                    }
+                }
+                if (g != 1) {
+                    printf("%s ", file->d_name);
+                }
+                continue;
+            }
+//            printf("%s ", file->d_name);
+//            (*notFoundFlag)++;
         } else if (flag == 0 && strlen(fileName) > letterCounter) {
             (*notFoundFlag)++;
         }
@@ -158,19 +205,19 @@ void propagate(char *rawPattern) {
 
 char *patternInput() {
     printf("Please enter your file pattern\n");
-    char *pattern = malloc(sizeof(char) * MAX_PATTERN_LENGTH);
+    char *pattern_ = malloc(sizeof(char) * MAX_PATTERN_LENGTH);
 
-    if (pattern == NULL) {
+    if (pattern_ == NULL) {
         perror("COULD NOT ALLOCATE MEMORY FOR PATTERN\n");
     }
 
-    scanf("%s", pattern);
+    scanf("%s", pattern_);
 
-    return pattern;
+    return pattern_;
 }
 
 int main(int argc, char *argv[]) {
-    char *pattern = patternInput();
+    pattern = patternInput();
 
     propagate(pattern);
 
