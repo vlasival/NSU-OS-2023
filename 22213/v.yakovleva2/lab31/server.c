@@ -42,7 +42,7 @@ int main() {
 
     //prepares the server socket to accept incoming connections. The listen function is used,
     //and it specifies the maximum number of pending connections (backlog) as 5
-    if (listen(fd, 5) == -1) {
+    if (listen(fd, BACKLOG) == -1) {
         perror("listen error");
         exit(1);
     }
