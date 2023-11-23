@@ -7,18 +7,22 @@
 #include <unistd.h>
 #include <ctype.h>
 #include <string.h>
+#include <signal.h>
 
 #define SERVER_SOCK_FILE "server.sock"
 #define MSGSIZE 20
 
+int fd = -1;
+void int_sig_handler();
 
 int main() {
-	int fd, sd, len, status, new_socket, active, max_sd, client_socket[10], max_clients = 10;
+	int sd, len, status, new_socket, active, max_sd, client_socket[10], max_clients = 10;
 	struct sockaddr_un addr;
     fd_set readfds;
 	char msgin[MSGSIZE];
 	memset(msgin, '\0', MSGSIZE);
 
+    signal(SIGINT, int_sig_handler);
 	if ((fd = socket(AF_UNIX, SOCK_STREAM, 0)) < 0) {
 		perror("Socket creation failure");
 		exit(EXIT_FAILURE);
@@ -103,8 +107,14 @@ int main() {
             }
         }
 	}
+}
 
-	close(fd);
-	unlink(SERVER_SOCK_FILE);
-	exit(EXIT_SUCCESS);
+void int_sig_handler() {
+    if (fd != -1) {
+        close(fd);
+    }
+    write(1, "\nReceiving finished\n", 21);
+
+    unlink(SERVER_SOCK_FILE);
+    exit(EXIT_SUCCESS);
 }
