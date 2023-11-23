@@ -13,7 +13,6 @@
 #define CLIENT_SOCK_FILE "client.sock"
 #define SERVER_SOCK_FILE "server.sock"
 
-
 int newConnection(struct pollfd *poll_list, int fd);
 
 int main() {
@@ -81,9 +80,6 @@ int main() {
             }
         }
 
-
-
-        // New connection
         if ((poll_fds[0].revents & POLLIN) || (poll_fds[0].revents & POLLPRI)) {
             if ((cl = accept(fd, NULL, NULL)) == -1) {
                 perror("accept error");
@@ -94,27 +90,26 @@ int main() {
                 perror("add new connection fail");
             }
         }
-        // Socket events
+
         for (int i = 1; i < POLL_LENGTH; i++) {
-            if (poll_fds[i].fd < 0) {
-                int cur_desc = poll_fds[i].fd;
+            if (poll_fds[i].fd < 0) continue;
+            int cur_desc = poll_fds[i].fd;
 
-                if ((poll_fds[i].revents & POLLIN) || (poll_fds[i].revents & POLLPRI)) {
-                    if ((rc = read(cur_desc, buf, sizeof(buf))) > 0) {
-                        for (int j = 0; j < rc; j++) {
-                            buf[j] = toupper(buf[j]);
-                            printf("%c", buf[j]);
-                        }
+            if ((poll_fds[i].revents & POLLIN) || (poll_fds[i].revents & POLLPRI)) {
+                if ((rc = read(cur_desc, buf, sizeof(buf))) > 0) {
+                    for (int j = 0; j < rc; j++) {
+                        buf[j] = toupper(buf[j]);
+                        printf("%c", buf[j]);
                     }
+                }
 
-                    if (rc == -1) {
-                        perror("read");
-                        exit(-1);
-                    } else if (rc == 0) {
-                        printf("closing connection\n");
-                        close(cur_desc);
-                        poll_fds[i].fd = -1;
-                    }
+                if (rc == -1) {
+                    perror("read");
+                    exit(-1);
+                } else if (rc == 0) {
+                    printf("closing connection\n");
+                    close(cur_desc);
+                    poll_fds[i].fd = -1;
                 }
             }
         }
