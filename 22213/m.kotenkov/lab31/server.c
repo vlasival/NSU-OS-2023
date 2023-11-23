@@ -13,6 +13,7 @@
 #define MSGSIZE 20
 
 int fd = -1;
+
 void int_sig_handler();
 
 int main() {
