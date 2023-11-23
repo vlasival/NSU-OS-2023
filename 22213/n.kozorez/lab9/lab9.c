@@ -10,7 +10,7 @@ int main() {
         exit(1);
     } 
     if (child == 0) {
-        if (execl("/bin/cat", "cat", "bigboy.txt", NULL) == -1) {
+        if (execlp("cat", "cat", "bigboy.txt", NULL) == -1) {
             perror("Failed to execute cat");
             exit(1);
         }
@@ -21,7 +21,7 @@ int main() {
             perror("Failed to wait on child"); 
             exit(1);
         }
-        printf("Cat ended.\n"); 
+        printf("\nCat ended.\n"); 
     };
 
     return 0;
