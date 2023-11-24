@@ -35,8 +35,7 @@ int main() {
     }
 
     int red = 0;
-    while (1) {
-        red = read(0, msgout, MSGSIZE);
+    while ((red = read(0, msgout, MSGSIZE)) > 0) {
         size_t to_send = red < MSGSIZE ? red : MSGSIZE;
         write(fd, msgout, to_send);
     };
