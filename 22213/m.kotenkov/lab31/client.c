@@ -16,15 +16,15 @@ void pipe_sig_handler();
 void int_sig_handler();
 
 int main() {
-	struct sockaddr_un addr;
-	char msgout[MSGSIZE];
+    struct sockaddr_un addr;
+    char msgout[MSGSIZE];
     signal(SIGPIPE, pipe_sig_handler);
     signal(SIGINT, int_sig_handler);
 
     if ((fd = socket(AF_UNIX, SOCK_STREAM, 0)) < 0) {
-		perror("Cannot create socket");
-		exit(EXIT_FAILURE);
-	}
+        perror("Cannot create socket");
+        exit(EXIT_FAILURE);
+    }
 
     memset(&addr, 0, sizeof(addr));
     addr.sun_family = AF_UNIX;
@@ -41,7 +41,7 @@ int main() {
     };
 
     close(fd);
-	exit(EXIT_SUCCESS);
+    exit(EXIT_SUCCESS);
 }
 
 void pipe_sig_handler() {
