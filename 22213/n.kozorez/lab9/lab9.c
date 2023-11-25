@@ -14,6 +14,7 @@ int main() {
             perror("Failed to execute cat");
             exit(1);
         }
+        perror("Exec failed");
     } else {
         siginfo_t child_info;
         printf("%d\n", child);
