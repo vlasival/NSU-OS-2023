@@ -52,14 +52,13 @@ int main() {
         FD_SET(fd, &readfds);
         max_sd = fd;
 
-        //add child sockets to set
         for (int i = 0 ; i < max_clients ; i++) {
 			int sd = client_socket[i];
             
-			if(sd > 0) {
-				FD_SET( sd , &readfds);
+			if (sd > 0) {
+				FD_SET(sd, &readfds);
             }
-            if(sd > max_sd) {
+            if (sd > max_sd) {
                 max_sd = sd;
             }
         }
@@ -71,15 +70,14 @@ int main() {
         }
 
 
-        if (FD_ISSET(fd, &readfds)) 
-        {
+        if (FD_ISSET(fd, &readfds)) {
             if ((new_socket = accept(fd, NULL, NULL)) == -1) {
                 perror("Accept failure");
                 exit(EXIT_FAILURE);
             }
             
             for (int i = 0; i < max_clients; i++) {
-				if(client_socket[i] == 0 ) {
+				if (client_socket[i] == 0) {
                     client_socket[i] = new_socket;
                     printf("Adding to list of sockets at index %d\n" , i);
 					
