@@ -17,46 +17,46 @@ int fd = -1;
 void int_sig_handler();
 
 int main() {
-	int sd, len, status, new_socket, active, max_sd, client_socket[10], max_clients = 10;
-	struct sockaddr_un addr;
+    int sd, len, status, new_socket, active, max_sd, client_socket[10], max_clients = 10;
+    struct sockaddr_un addr;
     fd_set readfds;
-	char msgin[MSGSIZE];
-	memset(msgin, '\0', MSGSIZE);
+    char msgin[MSGSIZE];
+    memset(msgin, '\0', MSGSIZE);
 
     signal(SIGINT, int_sig_handler);
-	if ((fd = socket(AF_UNIX, SOCK_STREAM, 0)) < 0) {
-		perror("Socket creation failure");
-		exit(EXIT_FAILURE);
-	}
+    if ((fd = socket(AF_UNIX, SOCK_STREAM, 0)) < 0) {
+        perror("Socket creation failure");
+        exit(EXIT_FAILURE);
+    }
 
-	memset(&addr, 0, sizeof(addr));
-	addr.sun_family = AF_UNIX;
-	strcpy(addr.sun_path, SERVER_SOCK_FILE);
+    memset(&addr, 0, sizeof(addr));
+    addr.sun_family = AF_UNIX;
+    strcpy(addr.sun_path, SERVER_SOCK_FILE);
 
-	unlink(SERVER_SOCK_FILE);
-	if ((status = bind(fd, (struct sockaddr *)&addr, sizeof(addr))) < 0) {
-		perror("Binding failure");
-		exit(EXIT_FAILURE);
-	}
-	if (listen(fd, 2) == -1) {
-		perror("Listening failure");
-	}
+    unlink(SERVER_SOCK_FILE);
+    if ((status = bind(fd, (struct sockaddr *)&addr, sizeof(addr))) < 0) {
+        perror("Binding failure");
+        exit(EXIT_FAILURE);
+    }
+    if (listen(fd, 2) == -1) {
+        perror("Listening failure");
+    }
 
 
     for (int i = 0; i < max_clients; i++) {   
         client_socket[i] = 0;   
     }
 
-	while (1) { 
+    while (1) { 
         FD_ZERO(&readfds);
         FD_SET(fd, &readfds);
         max_sd = fd;
 
         for (int i = 0 ; i < max_clients ; i++) {
-			int sd = client_socket[i];
+            int sd = client_socket[i];
             
-			if (sd > 0) {
-				FD_SET(sd, &readfds);
+            if (sd > 0) {
+                FD_SET(sd, &readfds);
             }
             if (sd > max_sd) {
                 max_sd = sd;
@@ -77,11 +77,10 @@ int main() {
             }
             
             for (int i = 0; i < max_clients; i++) {
-				if (client_socket[i] == 0) {
+                if (client_socket[i] == 0) {
                     client_socket[i] = new_socket;
                     printf("Adding to list of sockets at index %d\n" , i);
-					
-					break;
+                    break;
                 }
             }
         }
