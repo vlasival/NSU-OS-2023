@@ -1,0 +1,305 @@
+Last login: Mon Dec 18 09:11:25 on ttys000
+ssh cfit                                                                                                      
+ivan@ivan ~ % ssh cfit
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Thu Dec 14 13:04:17 2023 from 195.135.254.172
+i.vlasenko@mephisto:~$ ssh sol
+Enter passphrase for key '/home/students/22200/i.vlasenko/.ssh/solar': 
+Enter passphrase for key '/home/students/22200/i.vlasenko/.ssh/solar': 
+The Illumos Project     SunOS 5.11      illumos-8b06eaf6ac      February 2020
+i.vlasenko@fit-main:~$ ls .proc
+.proc: No such file or directory
+i.vlasenko@fit-main:~$ ls/.proc
+-bash: ls/.proc: No such file or directory
+i.vlasenko@fit-main:~$ ls/proc
+-bash: ls/proc: No such file or directory
+i.vlasenko@fit-main:~$ ls /proc
+1074   1212   1280   1319   5619   5659   5704   5740   5808   6063   6241   6557   6723   6840   931
+1120   1222   1285   1323   5620   5677   5706   5741   5875   6088   6439   6693   6823   6843   933
+1166   1224   1289   1331   5631   5679   5707   5780   5877   6090   6441   6694   6828   743    975
+1182   1227   12908  1333   5633   5680   5722   5782   5878   6091   6442   6696   6830   870    979
+1206   1230   12911  1334   5634   5685   5724   5783   5931   6107   6520   6697   6831   876
+1207   1232   1315   2427   5656   5687   5725   5805   5933   6238   6523   6720   6838   878
+1208   1243   1318   5617   5658   5688   5738   5807   5934   6240   6524   6722   6839   879
+i.vlasenko@fit-main:~$ ls /proc/979
+/proc/979: Permission denied
+i.vlasenko@fit-main:~$ ll          
+-bash: ll: command not found
+i.vlasenko@fit-main:~$ ls -la /proc
+total 1139
+dr-xr-xr-x 149 root     root      480032 Dec 18 10:26 .
+drwxr-xr-x  19 root     root          20 Feb  4  2020 ..
+dr-x--x--x   5 root     root         896 Nov 28 19:02 1074
+dr-x--x--x   5 root     root         896 Nov 28 19:02 1120
+dr-x--x--x   5 daemon   daemon       896 Nov 28 19:02 1166
+dr-x--x--x   5 root     root         896 Nov 28 19:02 1182
+dr-x--x--x   5 root     root         896 Nov 28 19:02 1206
+dr-x--x--x   5 root     root         896 Nov 28 19:02 1207
+dr-x--x--x   5 root     root         896 Nov 28 19:02 1208
+dr-x--x--x   5 root     root         896 Nov 28 19:02 1212
+dr-x--x--x   5 root     root         896 Nov 28 19:02 1222
+dr-x--x--x   5 root     root         896 Nov 28 19:02 1224
+dr-x--x--x   5 root     root         896 Nov 28 19:02 1227
+dr-x--x--x   5 root     root         896 Nov 28 19:02 1230
+dr-x--x--x   5 root     root         896 Nov 28 19:02 1232
+dr-x--x--x   5 root     root         896 Nov 28 19:02 1243
+dr-x--x--x   5 smmsp    smmsp        896 Nov 28 19:02 1280
+dr-x--x--x   5 root     root         896 Nov 28 19:02 1285
+dr-x--x--x   5 root     root         896 Nov 28 19:02 1289
+dr-x--x--x   5 a.yakupova1 a.yakupova1     896 Dec  2 17:32 12908
+dr-x--x--x   5 a.yakupova1 a.yakupova1     896 Dec  2 17:32 12911
+dr-x--x--x   5 daemon   daemon       896 Nov 28 19:03 1315
+dr-x--x--x   5 daemon   daemon       896 Nov 28 19:03 1318
+dr-x--x--x   5 daemon   daemon       896 Nov 28 19:03 1319
+dr-x--x--x   5 daemon   daemon       896 Nov 28 19:03 1323
+dr-x--x--x   5 root     root         896 Dec 17 18:14 1331
+dr-x--x--x   5 i.shalygin i.shalygin     896 Dec 17 18:15 1333
+dr-x--x--x   5 i.shalygin i.shalygin     896 Dec 17 18:15 1334
+dr-x--x--x   5 i.shalygin i.shalygin     896 Dec 17 20:26 2427
+dr-x--x--x   5 root     root         896 Dec 18 08:48 5617
+dr-x--x--x   5 n.logvinenko n.logvinenko     896 Dec 18 08:48 5619
+dr-x--x--x   5 n.logvinenko n.logvinenko     896 Dec 18 08:48 5620
+dr-x--x--x   5 root     root         896 Dec 18 08:52 5631
+dr-x--x--x   5 k.artishevskii k.artishevskii     896 Dec 18 08:52 5633
+dr-x--x--x   5 k.artishevskii k.artishevskii     896 Dec 18 08:52 5634
+dr-x--x--x   5 root     root         896 Dec 18 08:59 5656
+dr-x--x--x   5 e.belyaev1 e.belyaev1     896 Dec 18 08:59 5658
+dr-x--x--x   5 e.belyaev1 e.belyaev1     896 Dec 18 08:59 5659
+dr-x--x--x   5 root     root         896 Dec 18 09:01 5677
+dr-x--x--x   5 e.belyaev1 e.belyaev1     896 Dec 18 09:01 5679
+dr-x--x--x   5 e.belyaev1 e.belyaev1     896 Dec 18 09:01 5680
+dr-x--x--x   5 root     root         896 Dec 18 09:01 5685
+dr-x--x--x   5 e.lavrinenko e.lavrinenko     896 Dec 18 09:01 5687
+dr-x--x--x   5 e.lavrinenko e.lavrinenko     896 Dec 18 09:01 5688
+dr-x--x--x   5 root     root         896 Dec 18 09:02 5704
+dr-x--x--x   5 d.nikishov d.nikishov     896 Dec 18 09:02 5706
+dr-x--x--x   5 d.nikishov d.nikishov     896 Dec 18 09:02 5707
+dr-x--x--x   5 root     root         896 Dec 18 09:04 5722
+dr-x--x--x   5 m.ponomarev m.ponomarev     896 Dec 18 09:04 5724
+dr-x--x--x   5 m.ponomarev m.ponomarev     896 Dec 18 09:04 5725
+dr-x--x--x   5 root     root         896 Dec 18 09:05 5738
+dr-x--x--x   5 n.zenin  n.zenin      896 Dec 18 09:05 5740
+dr-x--x--x   5 n.zenin  n.zenin      896 Dec 18 09:05 5741
+dr-x--x--x   5 root     root         896 Dec 18 09:07 5780
+dr-x--x--x   5 d.nikishov d.nikishov     896 Dec 18 09:07 5782
+dr-x--x--x   5 d.nikishov d.nikishov     896 Dec 18 09:07 5783
+dr-x--x--x   5 root     root         896 Dec 18 09:09 5805
+dr-x--x--x   5 d.nikishov d.nikishov     896 Dec 18 09:09 5807
+dr-x--x--x   5 d.nikishov d.nikishov     896 Dec 18 09:09 5808
+dr-x--x--x   5 root     root         896 Dec 18 09:12 5875
+dr-x--x--x   5 s.golitsyn s.golitsyn     896 Dec 18 09:12 5877
+dr-x--x--x   5 s.golitsyn s.golitsyn     896 Dec 18 09:12 5878
+dr-x--x--x   5 root     root         896 Dec 18 09:17 5931
+dr-x--x--x   5 e.zhitnik e.zhitnik     896 Dec 18 09:17 5933
+dr-x--x--x   5 e.zhitnik e.zhitnik     896 Dec 18 09:17 5934
+dr-x--x--x   5 e.zhitnik e.zhitnik     896 Dec 18 09:23 6063
+dr-x--x--x   5 root     root         896 Dec 18 09:25 6088
+dr-x--x--x   5 e.palkin1 e.palkin1     896 Dec 18 09:25 6090
+dr-x--x--x   5 e.palkin1 e.palkin1     896 Dec 18 09:25 6091
+dr-x--x--x   5 e.palkin1 e.palkin1     896 Dec 18 09:27 6107
+dr-x--x--x   5 root     root         896 Dec 18 09:36 6238
+dr-x--x--x   5 n.korogodin n.korogodin     896 Dec 18 09:36 6240
+dr-x--x--x   5 n.korogodin n.korogodin     896 Dec 18 09:36 6241
+dr-x--x--x   5 root     root         896 Dec 18 09:50 6439
+dr-x--x--x   5 a.vinichenko a.vinichenko     896 Dec 18 09:50 6441
+dr-x--x--x   5 a.vinichenko a.vinichenko     896 Dec 18 09:50 6442
+dr-x--x--x   5 root     root         896 Dec 18 09:55 6520
+dr-x--x--x   5 s.geraskin s.geraskin     896 Dec 18 09:55 6523
+dr-x--x--x   5 s.geraskin s.geraskin     896 Dec 18 09:55 6524
+dr-x--x--x   5 e.belyaev1 e.belyaev1     896 Dec 18 10:01 6557
+dr-x--x--x   5 e.belyaev1 e.belyaev1     896 Dec 18 10:12 6693
+dr-x--x--x   5 root     root         896 Dec 18 10:12 6694
+dr-x--x--x   5 m.ponomarev m.ponomarev     896 Dec 18 10:12 6696
+dr-x--x--x   5 m.ponomarev m.ponomarev     896 Dec 18 10:12 6697
+dr-x--x--x   5 root     root         896 Dec 18 10:14 6720
+dr-x--x--x   5 a.kozubenko a.kozubenko     896 Dec 18 10:14 6722
+dr-x--x--x   5 a.kozubenko a.kozubenko     896 Dec 18 10:14 6723
+dr-x--x--x   5 e.belyaev1 e.belyaev1     896 Dec 18 10:26 6823
+dr-x--x--x   5 root     root         896 Dec 18 10:26 6828
+dr-x--x--x   5 i.vlasenko i.vlasenko     896 Dec 18 10:26 6830
+dr-x--x--x   5 i.vlasenko i.vlasenko     896 Dec 18 10:26 6831
+dr-x--x--x   5 i.vlasenko i.vlasenko     896 Dec 18 10:26 6851
+dr-x--x--x   5 root     root         896 Nov 28 19:01 743
+dr-x--x--x   5 root     root         896 Nov 28 19:01 870
+dr-x--x--x   5 root     root         896 Dec 17 17:44 876
+dr-x--x--x   5 i.shalygin i.shalygin     896 Dec 17 17:44 878
+dr-x--x--x   5 i.shalygin i.shalygin     896 Dec 17 17:44 879
+dr-x--x--x   5 root     root         896 Nov 28 19:01 931
+dr-x--x--x   5 root     root         896 Nov 28 19:01 933
+dr-x--x--x   5 netcfg   netadm       896 Nov 28 19:01 975
+dr-x--x--x   5 root     root         896 Nov 28 19:01 979
+i.vlasenko@fit-main:~$ ls -la /proc/896
+/proc/896: No such file or directory
+i.vlasenko@fit-main:~$ ls -la /proc
+total 1139
+dr-xr-xr-x 149 root     root      480032 Dec 18 10:27 .
+drwxr-xr-x  19 root     root          20 Feb  4  2020 ..
+dr-x--x--x   5 root     root         896 Nov 28 19:02 1074
+dr-x--x--x   5 root     root         896 Nov 28 19:02 1120
+dr-x--x--x   5 daemon   daemon       896 Nov 28 19:02 1166
+dr-x--x--x   5 root     root         896 Nov 28 19:02 1182
+dr-x--x--x   5 root     root         896 Nov 28 19:02 1206
+dr-x--x--x   5 root     root         896 Nov 28 19:02 1207
+dr-x--x--x   5 root     root         896 Nov 28 19:02 1208
+dr-x--x--x   5 root     root         896 Nov 28 19:02 1212
+dr-x--x--x   5 root     root         896 Nov 28 19:02 1222
+dr-x--x--x   5 root     root         896 Nov 28 19:02 1224
+dr-x--x--x   5 root     root         896 Nov 28 19:02 1227
+dr-x--x--x   5 root     root         896 Nov 28 19:02 1230
+dr-x--x--x   5 root     root         896 Nov 28 19:02 1232
+dr-x--x--x   5 root     root         896 Nov 28 19:02 1243
+dr-x--x--x   5 smmsp    smmsp        896 Nov 28 19:02 1280
+dr-x--x--x   5 root     root         896 Nov 28 19:02 1285
+dr-x--x--x   5 root     root         896 Nov 28 19:02 1289
+dr-x--x--x   5 a.yakupova1 a.yakupova1     896 Dec  2 17:32 12908
+dr-x--x--x   5 a.yakupova1 a.yakupova1     896 Dec  2 17:32 12911
+dr-x--x--x   5 daemon   daemon       896 Nov 28 19:03 1315
+dr-x--x--x   5 daemon   daemon       896 Nov 28 19:03 1318
+dr-x--x--x   5 daemon   daemon       896 Nov 28 19:03 1319
+dr-x--x--x   5 daemon   daemon       896 Nov 28 19:03 1323
+dr-x--x--x   5 root     root         896 Dec 17 18:14 1331
+dr-x--x--x   5 i.shalygin i.shalygin     896 Dec 17 18:15 1333
+dr-x--x--x   5 i.shalygin i.shalygin     896 Dec 17 18:15 1334
+dr-x--x--x   5 i.shalygin i.shalygin     896 Dec 17 20:26 2427
+dr-x--x--x   5 root     root         896 Dec 18 08:48 5617
+dr-x--x--x   5 n.logvinenko n.logvinenko     896 Dec 18 08:48 5619
+dr-x--x--x   5 n.logvinenko n.logvinenko     896 Dec 18 08:48 5620
+dr-x--x--x   5 root     root         896 Dec 18 08:52 5631
+dr-x--x--x   5 k.artishevskii k.artishevskii     896 Dec 18 08:52 5633
+dr-x--x--x   5 k.artishevskii k.artishevskii     896 Dec 18 08:52 5634
+dr-x--x--x   5 root     root         896 Dec 18 08:59 5656
+dr-x--x--x   5 e.belyaev1 e.belyaev1     896 Dec 18 08:59 5658
+dr-x--x--x   5 e.belyaev1 e.belyaev1     896 Dec 18 08:59 5659
+dr-x--x--x   5 root     root         896 Dec 18 09:01 5677
+dr-x--x--x   5 e.belyaev1 e.belyaev1     896 Dec 18 09:01 5679
+dr-x--x--x   5 e.belyaev1 e.belyaev1     896 Dec 18 09:01 5680
+dr-x--x--x   5 root     root         896 Dec 18 09:01 5685
+dr-x--x--x   5 e.lavrinenko e.lavrinenko     896 Dec 18 09:01 5687
+dr-x--x--x   5 e.lavrinenko e.lavrinenko     896 Dec 18 09:01 5688
+dr-x--x--x   5 root     root         896 Dec 18 09:02 5704
+dr-x--x--x   5 d.nikishov d.nikishov     896 Dec 18 09:02 5706
+dr-x--x--x   5 d.nikishov d.nikishov     896 Dec 18 09:02 5707
+dr-x--x--x   5 root     root         896 Dec 18 09:04 5722
+dr-x--x--x   5 m.ponomarev m.ponomarev     896 Dec 18 09:04 5724
+dr-x--x--x   5 m.ponomarev m.ponomarev     896 Dec 18 09:04 5725
+dr-x--x--x   5 root     root         896 Dec 18 09:05 5738
+dr-x--x--x   5 n.zenin  n.zenin      896 Dec 18 09:05 5740
+dr-x--x--x   5 n.zenin  n.zenin      896 Dec 18 09:05 5741
+dr-x--x--x   5 root     root         896 Dec 18 09:07 5780
+dr-x--x--x   5 d.nikishov d.nikishov     896 Dec 18 09:07 5782
+dr-x--x--x   5 d.nikishov d.nikishov     896 Dec 18 09:07 5783
+dr-x--x--x   5 root     root         896 Dec 18 09:09 5805
+dr-x--x--x   5 d.nikishov d.nikishov     896 Dec 18 09:09 5807
+dr-x--x--x   5 d.nikishov d.nikishov     896 Dec 18 09:09 5808
+dr-x--x--x   5 root     root         896 Dec 18 09:12 5875
+dr-x--x--x   5 s.golitsyn s.golitsyn     896 Dec 18 09:12 5877
+dr-x--x--x   5 s.golitsyn s.golitsyn     896 Dec 18 09:12 5878
+dr-x--x--x   5 root     root         896 Dec 18 09:17 5931
+dr-x--x--x   5 e.zhitnik e.zhitnik     896 Dec 18 09:17 5933
+dr-x--x--x   5 e.zhitnik e.zhitnik     896 Dec 18 09:17 5934
+dr-x--x--x   5 e.zhitnik e.zhitnik     896 Dec 18 09:23 6063
+dr-x--x--x   5 root     root         896 Dec 18 09:25 6088
+dr-x--x--x   5 e.palkin1 e.palkin1     896 Dec 18 09:25 6090
+dr-x--x--x   5 e.palkin1 e.palkin1     896 Dec 18 09:25 6091
+dr-x--x--x   5 e.palkin1 e.palkin1     896 Dec 18 09:27 6107
+dr-x--x--x   5 root     root         896 Dec 18 09:36 6238
+dr-x--x--x   5 n.korogodin n.korogodin     896 Dec 18 09:36 6240
+dr-x--x--x   5 n.korogodin n.korogodin     896 Dec 18 09:36 6241
+dr-x--x--x   5 root     root         896 Dec 18 09:50 6439
+dr-x--x--x   5 a.vinichenko a.vinichenko     896 Dec 18 09:50 6441
+dr-x--x--x   5 a.vinichenko a.vinichenko     896 Dec 18 09:50 6442
+dr-x--x--x   5 root     root         896 Dec 18 09:55 6520
+dr-x--x--x   5 s.geraskin s.geraskin     896 Dec 18 09:55 6523
+dr-x--x--x   5 s.geraskin s.geraskin     896 Dec 18 09:55 6524
+dr-x--x--x   5 e.belyaev1 e.belyaev1     896 Dec 18 10:01 6557
+dr-x--x--x   5 e.belyaev1 e.belyaev1     896 Dec 18 10:12 6693
+dr-x--x--x   5 root     root         896 Dec 18 10:12 6694
+dr-x--x--x   5 m.ponomarev m.ponomarev     896 Dec 18 10:12 6696
+dr-x--x--x   5 m.ponomarev m.ponomarev     896 Dec 18 10:12 6697
+dr-x--x--x   5 root     root         896 Dec 18 10:14 6720
+dr-x--x--x   5 a.kozubenko a.kozubenko     896 Dec 18 10:14 6722
+dr-x--x--x   5 a.kozubenko a.kozubenko     896 Dec 18 10:14 6723
+dr-x--x--x   5 e.belyaev1 e.belyaev1     896 Dec 18 10:26 6823
+dr-x--x--x   5 root     root         896 Dec 18 10:26 6828
+dr-x--x--x   5 i.vlasenko i.vlasenko     896 Dec 18 10:26 6830
+dr-x--x--x   5 i.vlasenko i.vlasenko     896 Dec 18 10:26 6831
+dr-x--x--x   5 i.vlasenko i.vlasenko     896 Dec 18 10:27 6854
+dr-x--x--x   5 root     root         896 Nov 28 19:01 743
+dr-x--x--x   5 root     root         896 Nov 28 19:01 870
+dr-x--x--x   5 root     root         896 Dec 17 17:44 876
+dr-x--x--x   5 i.shalygin i.shalygin     896 Dec 17 17:44 878
+dr-x--x--x   5 i.shalygin i.shalygin     896 Dec 17 17:44 879
+dr-x--x--x   5 root     root         896 Nov 28 19:01 931
+dr-x--x--x   5 root     root         896 Nov 28 19:01 933
+dr-x--x--x   5 netcfg   netadm       896 Nov 28 19:01 975
+dr-x--x--x   5 root     root         896 Nov 28 19:01 979
+i.vlasenko@fit-main:~$ ls -la /proc/
+1074/  1212/  1280/  1319/  5619/  5659/  5704/  5740/  5808/  6063/  6241/  6557/  6723/  876/   
+1120/  1222/  1285/  1323/  5620/  5677/  5706/  5741/  5875/  6088/  6439/  6693/  6823/  878/   
+1166/  1224/  1289/  1331/  5631/  5679/  5707/  5780/  5877/  6090/  6441/  6694/  6828/  879/   
+1182/  1227/  12908/ 1333/  5633/  5680/  5722/  5782/  5878/  6091/  6442/  6696/  6830/  931/   
+1206/  1230/  12911/ 1334/  5634/  5685/  5724/  5783/  5931/  6107/  6520/  6697/  6831/  933/   
+1207/  1232/  1315/  2427/  5656/  5687/  5725/  5805/  5933/  6238/  6523/  6720/  743/   975/   
+1208/  1243/  1318/  5617/  5658/  5688/  5738/  5807/  5934/  6240/  6524/  6722/  870/   979/   
+i.vlasenko@fit-main:~$ ls -la /proc/
+1074/  1212/  1280/  1319/  5619/  5659/  5704/  5740/  5808/  6063/  6241/  6557/  6723/  876/   
+1120/  1222/  1285/  1323/  5620/  5677/  5706/  5741/  5875/  6088/  6439/  6693/  6823/  878/   
+1166/  1224/  1289/  1331/  5631/  5679/  5707/  5780/  5877/  6090/  6441/  6694/  6828/  879/   
+1182/  1227/  12908/ 1333/  5633/  5680/  5722/  5782/  5878/  6091/  6442/  6696/  6830/  931/   
+1206/  1230/  12911/ 1334/  5634/  5685/  5724/  5783/  5931/  6107/  6520/  6697/  6831/  933/   
+1207/  1232/  1315/  2427/  5656/  5687/  5725/  5805/  5933/  6238/  6523/  6720/  743/   975/   
+1208/  1243/  1318/  5617/  5658/  5688/  5738/  5807/  5934/  6240/  6524/  6722/  870/   979/   
+i.vlasenko@fit-main:~$ ls -la /proc/6831/
+total 10155
+dr-x--x--x   5 i.vlasenko i.vlasenko     896 Dec 18 10:26 .
+dr-xr-xr-x 149 root     root      480032 Dec 18 10:27 ..
+-rw-------   1 i.vlasenko i.vlasenko 4673536 Dec 18 10:26 as
+-r--------   1 i.vlasenko i.vlasenko     200 Dec 18 10:26 auxv
+dr-x------   2 i.vlasenko i.vlasenko      32 Dec 18 10:26 contracts
+-r--------   1 i.vlasenko i.vlasenko      32 Dec 18 10:26 cred
+--w-------   1 i.vlasenko i.vlasenko       0 Dec 18 10:26 ctl
+lr-x------   1 i.vlasenko i.vlasenko       0 Dec 18 10:26 cwd -> 
+dr-x------   2 i.vlasenko i.vlasenko    8208 Dec 18 10:26 fd
+-r--------   1 i.vlasenko i.vlasenko       0 Dec 18 10:26 ldt
+-r--r--r--   1 i.vlasenko i.vlasenko     120 Dec 18 10:26 lpsinfo
+-r--------   1 i.vlasenko i.vlasenko     816 Dec 18 10:26 lstatus
+-r--r--r--   1 i.vlasenko i.vlasenko     536 Dec 18 10:26 lusage
+dr-xr-xr-x   3 i.vlasenko i.vlasenko      64 Dec 18 10:26 lwp
+-r--------   1 i.vlasenko i.vlasenko    2688 Dec 18 10:26 map
+dr-x------   2 i.vlasenko i.vlasenko     544 Dec 18 10:26 object
+-r--------   1 i.vlasenko i.vlasenko    3976 Dec 18 10:26 pagedata
+dr-x------   2 i.vlasenko i.vlasenko    8752 Dec 18 10:26 path
+-r--------   1 i.vlasenko i.vlasenko      72 Dec 18 10:26 priv
+-r--r--r--   1 i.vlasenko i.vlasenko     336 Dec 18 10:26 psinfo
+-r--------   1 i.vlasenko i.vlasenko    2688 Dec 18 10:26 rmap
+lr-x------   1 i.vlasenko i.vlasenko       0 Dec 18 10:26 root -> 
+-r--------   1 i.vlasenko i.vlasenko      40 Dec 18 10:26 secflags
+-r--------   1 i.vlasenko i.vlasenko    2336 Dec 18 10:26 sigact
+-r--------   1 i.vlasenko i.vlasenko    1136 Dec 18 10:26 status
+-r--r--r--   1 i.vlasenko i.vlasenko     256 Dec 18 10:26 usage
+-r--------   1 i.vlasenko i.vlasenko       0 Dec 18 10:26 watch
+-r--------   1 i.vlasenko i.vlasenko    4256 Dec 18 10:26 xmap
+i.vlasenko@fit-main:~$ ls -la /proc/6831/
+as         cred       fd/        lstatus    map        path/      rmap       sigact     watch
+auxv       ctl        ldt        lusage     object/    priv       root/      status     xmap
+contracts/ cwd/       lpsinfo    lwp/       pagedata   psinfo     secflags   usage      
+i.vlasenko@fit-main:~$ ls -la /proc/6831/
+as         cred       fd/        lstatus    map        path/      rmap       sigact     watch
+auxv       ctl        ldt        lusage     object/    priv       root/      status     xmap
+contracts/ cwd/       lpsinfo    lwp/       pagedata   psinfo     secflags   usage      
+i.vlasenko@fit-main:~$ ls -la /proc/6831/fd/
+total 19
+dr-x------   2 i.vlasenko i.vlasenko    8208 Dec 18 10:26 .
+dr-x--x--x   5 i.vlasenko i.vlasenko     896 Dec 18 10:26 ..
+c---------   1 i.vlasenko tty      176,  6 Dec 18 10:27 0
+c---------   1 i.vlasenko tty      176,  6 Dec 18 10:27 1
+c---------   1 i.vlasenko tty      176,  6 Dec 18 10:27 2
+c---------   1 i.vlasenko tty      176,  6 Dec 18 10:27 255
+D---------   1 root     root           0 Nov 28 19:02 3
+i.vlasenko@fit-main:~$ ls -la /proc/6831/fd/

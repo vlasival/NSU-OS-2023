@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
     }
 
     if (pid == 0) {
-        execl("/bin/cat", "cat", argv[1], (char *) 0);
+        execlp("cat", "cat", argv[1], NULL);
         perror("Failed to call cat");
         exit(-1);
     }
