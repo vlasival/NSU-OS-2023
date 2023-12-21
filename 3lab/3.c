@@ -31,6 +31,3 @@ int main() {
 
     return 0;
 }
-
-x flag
-permissions file
