@@ -7,9 +7,9 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 
-#define MAX_CONNECTIONS 4096
-#define BACKLOG 512
-#define MAX_MESSAGE_LEN 2048
+#define MAX_CONNECTIONS 10
+#define BACKLOG 10
+#define MAX_MESSAGE_LEN 1024
 #define IORING_FEAT_FAST_POLL (1U << 5)
 
 void add_accept(struct io_uring *ring, int fd, struct sockaddr *client_addr, socklen_t *client_len);
